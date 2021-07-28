@@ -21,6 +21,7 @@ public class TrainReducer extends MapReduceBase implements Reducer<Text, Text, T
 		List<Diabetes> listDiabetes = new ArrayList<Diabetes>();
 		Text key = t_key;
 		String valuesOut = "";
+		//
 		String[] valuesSplit;
 		int N = 0;
 		while (values.hasNext()) {
@@ -35,6 +36,7 @@ public class TrainReducer extends MapReduceBase implements Reducer<Text, Text, T
 			diabetes.setBmi(Double.parseDouble(valuesSplit[5]));
 			diabetes.setDiabetesPredigreeFunction(Double.parseDouble(valuesSplit[6]));
 			diabetes.setAge(Double.parseDouble(valuesSplit[7]));
+			
 			listDiabetes.add(diabetes);
 			
 			N++;
@@ -43,6 +45,7 @@ public class TrainReducer extends MapReduceBase implements Reducer<Text, Text, T
 		reader.saveToProperties(key.toString().trim(), N);
 		
 		mean = meanService.meanDiabetes(listDiabetes,N);
+		
 		variance = varianceService.varianceDiabetes(listDiabetes, mean, N);
 		valuesOut = mean.getPregnancies() + " " + variance.getPregnancies() + " "
 						+ mean.getGlucose() + " " + variance.getGlucose() + " "

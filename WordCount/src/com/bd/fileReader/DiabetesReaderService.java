@@ -23,7 +23,7 @@ public class DiabetesReaderService {
 	private String dir = "D:\\Zoom\\PTDLL\\Output\\";
 	private String FILE_NAME = "part-00000";
 
-	public Map<Integer, List<Diabetes>> getMeanAndVarianceFromFileReader(String directoryOut) throws IOException {
+	public List<Diabetes> getMeanAndVarianceFromFileReader(String directoryOut) throws IOException {
 		List<Diabetes> listDiabetes = new ArrayList<Diabetes>();
 		Map<Integer, List<Diabetes>> map = new HashMap<>();
 		
@@ -32,7 +32,7 @@ public class DiabetesReaderService {
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fs.open(fileTest)));
 		String line = bufferedReader.readLine();
 		while (line != null) {
-
+			
 			String[] lineVal = line.split("\\s+");
 			Diabetes mean = new Diabetes();
 			mean.setPregnancies(Double.parseDouble(lineVal[1]));
@@ -55,17 +55,11 @@ public class DiabetesReaderService {
 			variance.setDiabetesPredigreeFunction(Double.parseDouble(lineVal[14]));
 			variance.setAge(Double.parseDouble(lineVal[16]));
 			listDiabetes.add(variance);
-
-			if (1 == Integer.parseInt(lineVal[0])) {
-				map.put(1, listDiabetes);
-			} else {
-				map.put(0, listDiabetes);
-			}
 			
 			line = bufferedReader.readLine();
 		}
 		bufferedReader.close();
-		return map;
+		return listDiabetes;
 	}
 
 	public void saveToProperties(String key, int n) throws IOException {

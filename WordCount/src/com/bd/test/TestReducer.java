@@ -1,5 +1,6 @@
 package com.bd.test;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Iterator;   
 
 import org.apache.hadoop.io.Text;
@@ -12,16 +13,16 @@ public class TestReducer extends TrainReducer {
 
 	public void reduce(Text t_key, Iterator<Text> values, OutputCollector<Text,Text> output, Reporter reporter) throws IOException {
 		Text key = t_key;
-		double MAX_VALUE = Integer.MIN_VALUE;
-		double a = 0;
+		BigDecimal max = new BigDecimal(Integer.MIN_VALUE);
+		BigDecimal b = null;
 		String OUTCOME = "";
 		String[] VALUE_SPLIT;
 		while (values.hasNext()) {
 			Text content = values.next();
 			VALUE_SPLIT = content.toString().split("\\s+");
-			a = Double.parseDouble(VALUE_SPLIT[0]);
-			if (a > MAX_VALUE){
-				MAX_VALUE = a;
+			b = new BigDecimal(VALUE_SPLIT[0]);
+			if (1 == b.compareTo(max)){
+				max = b;
 				OUTCOME = VALUE_SPLIT[1];
 			}
 		}
